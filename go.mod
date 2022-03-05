@@ -1,3 +1,3 @@
 module github.com/FengZhg/go_tools
 
-go 1.16
+go 1.17
