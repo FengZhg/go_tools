@@ -1,7 +1,7 @@
 package gin_middleware
 
 import (
-	"github.com/FengZhg/errs"
+	"github.com/FengZhg/go_tools/errs"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"time"
