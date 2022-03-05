@@ -1,7 +1,7 @@
 github.com/FengZhg/go_tools/errs v0.0.0-20220305103913-cf7dbe5fc5ca h1:x1CSOdm/iaNcTXPm3oshDF+o5iXVXTxEdZlSUikNnjw=
 github.com/FengZhg/go_tools/errs v0.0.0-20220305103913-cf7dbe5fc5ca/go.mod h1:Uaw2A9e1YodKT6WMPS6UJ1HnS0qPWeljPWPfIl3u4rY=
-github.com/FengZhg/go_tools/protocol_go/protocol_go v0.0.0-20220305103913-cf7dbe5fc5ca h1:wxOT+WI5TIHi4XkdKkPJaQOcFtwHFIWU5nSQwmkKAqk=
-github.com/FengZhg/go_tools/protocol_go/protocol_go v0.0.0-20220305103913-cf7dbe5fc5ca/go.mod h1:DzvNw3HBPWHG63Qu6tL9+d8DMLU2dRNnQt0PkTzaMhA=
+github.com/FengZhg/go_tools/protocol_go v0.0.0-20220305104133-56923c9cd358 h1:L2rTpHBMpyiIYZd7ZYiTfeWiIo7DjEZ/luQbLaAKC9g=
+github.com/FengZhg/go_tools/protocol_go v0.0.0-20220305104133-56923c9cd358/go.mod h1:Ndzm0XNw7EstjmINoT+tvs2GZtkO83g95zP1bp5Xa4c=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
