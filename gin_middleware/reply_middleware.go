@@ -2,7 +2,7 @@ package gin_middleware
 
 import (
 	"github.com/FengZhg/go_tools/errs"
-	"github.com/FengZhg/go_tools/protocol_go/protocol_go"
+	"github.com/FengZhg/go_tools/protocol_go"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
