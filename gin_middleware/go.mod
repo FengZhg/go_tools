@@ -1,12 +1,7 @@
 module github.com/FengZhg/go_tools/gin_middleware
 
-go 1.16
+go 1.17
 
-require (
-	github.com/FengZhg/go_tools/errs v0.0.0-20220303074913-8350697c3ff8
-	github.com/FengZhg/go_tools/protocol_go/protocol_go v0.0.0-20220303131519-3afb83ef19ac
-	github.com/gin-gonic/gin v1.7.7
-	github.com/sirupsen/logrus v1.8.1
-)
+require github.com/FengZhg/go_tools v0.0.0-20220305102153-e137e8994576 // indirect
 
 replace github.com/FengZhg/go_tools => ../
