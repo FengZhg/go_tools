@@ -1,4 +1,4 @@
-module github.com/FengZhg/logrus_gin_log
+module github.com/FengZhg/go_tools/logrus_gin_log
 
 go 1.16
 
