@@ -4,11 +4,9 @@ package gin_middleware
 
 import (
 	"bytes"
-	"github.com/FengZhg/go_tools/protocol_go"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
-	"time"
 )
 
 type bodyLogWriter struct {
@@ -28,7 +26,9 @@ func (w bodyLogWriter) WriteString(s string) (int, error) {
 	return w.ResponseWriter.WriteString(s)
 }
 
-type
+type RequestLog struct {
+	//writeLogHandler func(*context,*)
+}
 
 // RequestLogMiddleware 获取后置打印请求和返回体的中间件
 func RequestLogMiddleware() gin.HandlerFunc {
@@ -47,17 +47,17 @@ func requestLogMiddleware(ctx *gin.Context) {
 	// 等待进一步执行
 	ctx.Next()
 
-	// 构造日志
-	logInfo := &protocol_go.SingleLogInfo{
-		LogType:   int32(logType),
-		Id:        req.GetId(),
-		FullPath:  path,
-		Status:    status,
-		Req:       req.String(),
-		Message:   message,
-		Time:      time.Format("2006-01-02 15:04:05"),
-		TimeStamp: time.Unix(),
-	}
+	//// 构造日志
+	//logInfo := &protocol_go{
+	//	LogType:   int32(logType),
+	//	Id:        req.GetId(),
+	//	FullPath:  path,
+	//	Status:    status,
+	//	Req:       req.String(),
+	//	Message:   message,
+	//	Time:      time.Format("2006-01-02 15:04:05"),
+	//	TimeStamp: time.Unix(),
+	//}
 
 	ctx.IsAborted()
 
