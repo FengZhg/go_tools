@@ -19,3 +19,17 @@ message LoginStatus {
   //bool   admin      = 6; // 管理员标志
   int32  passStep   = 8; // 校验通过情况
 }
+
+message SingleLogInfo {
+  int32  logType   = 1;  // 查询日志类型
+  string id        = 3;  // 用户id
+  string fullPath  = 4;  // 请求路径
+  string status    = 5;  // 操作结果
+  string req       = 6;  // 请求参数
+  string message   = 7;  // 操作结果信息
+  string time      = 8;  // 日志产生时间
+  int64  timeStamp = 9;  // 日志产生时间戳
+  string imgUrl    = 10; // 单位注册时的图片url
+  string reserve1  = 11; // 保留字段1
+  string reserve2  = 12; // 保留字段2
+}

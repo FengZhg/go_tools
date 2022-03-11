@@ -23,7 +23,7 @@ func replyMiddleware(ctx *gin.Context) {
 	// 判断是否有错误
 	if len(ctx.Errors) != 0 {
 		err := ctx.Errors[0].Err
-		ctx.JSON(http.StatusInternalServerError, &protocol_go.StandardRsp{
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, &protocol_go.StandardRsp{
 			Status: errs.GetErrorCode(err),
 			Error:  errs.GetErrorMsg(err),
 		})
