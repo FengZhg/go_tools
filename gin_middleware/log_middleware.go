@@ -4,41 +4,45 @@ package gin_middleware
 
 import (
 	"bytes"
+	"github.com/FengZhg/goLogin"
+	"github.com/FengZhg/go_tools/protocol_go"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"time"
 )
 
-type bodyLogWriter struct {
-	gin.ResponseWriter
-	body *bytes.Buffer
+type (
+	outputFunc     func(*gin.Context, *protocol_go.SingleLogInfo)
+	getLogTypeFunc func(*gin.Context) int32
+	enrichFunc     func(ctx *gin.Context) *protocol_go.SingleLogInfo
+)
+
+//用于打印请求相应情况中间件
+type requestLog struct {
+	outputCallbacks    []outputFunc   // 输出日志信息的回调函数（默认已有log.info()）
+	getLogTypeCallback getLogTypeFunc // 获取日志类型的回调 ctx.FullPath()到int32的映射
+	enrichCallback     enrichFunc     // 丰富日志信息的钩子
 }
 
-//Write 重载普通write
-func (w bodyLogWriter) Write(b []byte) (int, error) {
-	w.body.Write(b)
-	return w.ResponseWriter.Write(b)
-}
-
-//WriteString 重载ctx.string()的WriteString
-func (w bodyLogWriter) WriteString(s string) (int, error) {
-	w.body.WriteString(s)
-	return w.ResponseWriter.WriteString(s)
-}
-
-type RequestLog struct {
-	//writeLogHandler func(*context,*)
+//NewRequestLog 新建请求日志结构体
+func NewRequestLog(outputCallbacks []outputFunc, getLogTypeCallback getLogTypeFunc, enrichCallback enrichFunc) *requestLog {
+	return &requestLog{
+		outputCallbacks:    outputCallbacks,
+		getLogTypeCallback: getLogTypeCallback,
+		enrichCallback:     enrichCallback,
+	}
 }
 
 // RequestLogMiddleware 获取后置打印请求和返回体的中间件
-func RequestLogMiddleware() gin.HandlerFunc {
+func (r *requestLog) RequestLogMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		requestLogMiddleware(ctx)
+		r.requestLogMiddleware(ctx)
 	}
 }
 
 //requestLogMiddleware 打印请求和返回体的中间件
-func requestLogMiddleware(ctx *gin.Context) {
+func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 
 	// 创建BodyLogWriter
 	blw := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: ctx.Writer}
@@ -47,26 +51,24 @@ func requestLogMiddleware(ctx *gin.Context) {
 	// 等待进一步执行
 	ctx.Next()
 
-	//// 构造日志
-	//logInfo := &protocol_go{
-	//	LogType:   int32(logType),
-	//	Id:        req.GetId(),
-	//	FullPath:  path,
-	//	Status:    status,
-	//	Req:       req.String(),
-	//	Message:   message,
-	//	Time:      time.Format("2006-01-02 15:04:05"),
-	//	TimeStamp: time.Unix(),
-	//}
+	// 获取登录态
+	loginInfo, _ := goLogin.GetLoginInfo(ctx)
+	// 构造日志
+	logInfo := &protocol_go.SingleLogInfo{
+		LogType:   r.runGetLogType(ctx),
+		Id:        loginInfo.GetId(),
+		FullPath:  ctx.FullPath(),
+		Status:    r.getStatus(ctx),
+		Req:       r.getRequestBody(ctx),
+		Message:   blw.body.String(),
+		Time:      time.Now().Format("2006-01-02 15:04:05"),
+		TimeStamp: time.Now().Unix(),
+	}
 
-	ctx.IsAborted()
-
-	// 执行完毕
-	log.Debugf("Req Path:\t%v\tRequest:\t%v\tResponse:\t%v", ctx.FullPath(), getRequestBody(ctx), blw.body.String())
 }
 
 //getRequestBody 获取请求参数
-func getRequestBody(ctx *gin.Context) string {
+func (r *requestLog) getRequestBody(ctx *gin.Context) string {
 
 	// read请求参数
 	reqBytes, err := ioutil.ReadAll(ctx.Request.Body)
@@ -76,4 +78,20 @@ func getRequestBody(ctx *gin.Context) string {
 	}
 
 	return string(reqBytes)
+}
+
+//getStatus 获取处理状态
+func (r *requestLog) getStatus(ctx *gin.Context) string {
+	if ctx.IsAborted() {
+		return "失败"
+	}
+	return "成功"
+}
+
+//runGetLogType 获取日志类型
+func (r *requestLog) runGetLogType(ctx *gin.Context) int32 {
+	if r.getLogTypeCallback != nil {
+		return r.getLogTypeCallback(ctx)
+	}
+	return 0
 }
