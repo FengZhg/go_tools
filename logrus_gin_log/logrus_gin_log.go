@@ -92,7 +92,6 @@ func (m *Formatter) Format(entry *log.Entry) ([]byte, error) {
 
 	// 处理时间情况
 	timestamp := entry.Time.Format("2006-01-02 15:04:05")
-
 	// 根据日志级别获取需要渲染的日志颜色
 	levelColor := m.getLevelColor(entry.Level)
 
