@@ -49,19 +49,19 @@ func (r *requestLog) RequestLogMiddleware() gin.HandlerFunc {
 func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 
 	// 创建BodyLogWriter
-	blw := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: ctx.Writer}
-	ctx.Writer = blw
+	bw := &bodyWriter{body: bytes.NewBufferString(""), ResponseWriter: ctx.Writer}
+	ctx.Writer = bw
 	// 等待进一步执行
 	ctx.Next()
 
 	// 构建日志信息
-	logInfo := r.buildLogInfo(ctx, blw)
+	logInfo := r.buildLogInfo(ctx, bw)
 	// 简简单单并发执行日志输出回调函数
 	r.doOutputCallbacks(ctx, logInfo)
 }
 
 //buildLogInfo 构建一条日志
-func (r *requestLog) buildLogInfo(ctx *gin.Context, blw *bodyLogWriter) *protocol_go.SingleLogInfo {
+func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *protocol_go.SingleLogInfo {
 
 	// 获取登录态
 	loginInfo, _ := goLogin.GetLoginInfo(ctx)
@@ -72,7 +72,7 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, blw *bodyLogWriter) *protoco
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
 		Req:       r.getRequestBody(ctx),
-		Message:   blw.body.String(),
+		Message:   bw.body.String(),
 		Time:      time.Now().Format("2006-01-02 15:04:05"),
 		TimeStamp: time.Now().Unix(),
 	}
