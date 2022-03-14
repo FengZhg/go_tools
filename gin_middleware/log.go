@@ -31,7 +31,8 @@ type requestLog struct {
 
 //NewRequestLog 新建请求日志结构体
 func NewRequestLog(outputCallbacks []outputFunc, enrichHook enrichFunc) *requestLog {
-	outputCallbacks = append(outputCallbacks, stdoutLogWriter)
+	//stdLogCallback 输出时配logrus Formater文件内容，会输出到文件
+	outputCallbacks = append(outputCallbacks, stdLogCallback)
 	return &requestLog{
 		outputCallbacks: outputCallbacks,
 		enrichHook:      enrichHook,
@@ -120,8 +121,8 @@ func (r *requestLog) getStatus(ctx *gin.Context) string {
 	return "成功"
 }
 
-//stdoutLogWriter 标准输出日志信息
-func stdoutLogWriter(ctx *gin.Context, logInfo *protocol_go.SingleLogInfo) {
+//stdLogCallback 标准输出日志信息
+func stdLogCallback(ctx *gin.Context, logInfo *protocol_go.SingleLogInfo) {
 	log.Info("LoginInfo ID:%v\tFull Path:%v\tReq Body:%v\tRsp:%v", logInfo.GetId(), logInfo.GetFullPath(),
 		logInfo.GetReq(), logInfo.GetMessage())
 }
