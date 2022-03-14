@@ -3,14 +3,11 @@ module github.com/FengZhg/go_tools/gin_middleware
 go 1.17
 
 require (
-	github.com/FengZhg/go_tools/errs v0.0.0-20220311100239-187aa2cf1ba1
+	github.com/FengZhg/goLogin v0.0.0-20220311061427-9bce2a0045e9
+	github.com/FengZhg/go_tools/errs v0.0.0-20220314074615-1792eee2afca
 	github.com/FengZhg/go_tools/protocol_go v0.0.0-20220311100239-187aa2cf1ba1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/sirupsen/logrus v1.8.1
-)
-
-require (
-	github.com/FengZhg/goLogin v0.0.0-20220311061427-9bce2a0045e9 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -25,7 +22,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/crypto v0.0.0-20220307211146-efcb8507fb70 // indirect
+	golang.org/x/crypto v0.0.0-20220313003712-b769efc7c000 // indirect
 	golang.org/x/sys v0.0.0-20220310020820-b874c991c1a5 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
