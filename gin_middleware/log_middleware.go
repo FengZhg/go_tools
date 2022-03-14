@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"sync"
 	"time"
 )
 
@@ -30,6 +31,7 @@ type requestLog struct {
 
 //NewRequestLog 新建请求日志结构体
 func NewRequestLog(outputCallbacks []outputFunc, enrichHook enrichFunc) *requestLog {
+	outputCallbacks = append(outputCallbacks, stdoutLogWriter)
 	return &requestLog{
 		outputCallbacks: outputCallbacks,
 		enrichHook:      enrichHook,
@@ -54,29 +56,8 @@ func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 
 	// 构建日志信息
 	logInfo := r.buildLogInfo(ctx, blw)
-	// 处理日志输出回调函数
-
-}
-
-//getRequestBody 获取请求参数
-func (r *requestLog) getRequestBody(ctx *gin.Context) string {
-
-	// read请求参数
-	reqBytes, err := ioutil.ReadAll(ctx.Request.Body)
-	if err != nil {
-		log.Errorf("Pharse Request Json Param Error err = %v", err)
-		return "请求参数解析错误"
-	}
-
-	return string(reqBytes)
-}
-
-//getStatus 获取处理状态
-func (r *requestLog) getStatus(ctx *gin.Context) string {
-	if ctx.IsAborted() {
-		return "失败"
-	}
-	return "成功"
+	// 简简单单并发执行日志输出回调函数
+	r.doOutputCallbacks(ctx, logInfo)
 }
 
 //buildLogInfo 构建一条日志
@@ -102,6 +83,41 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, blw *bodyLogWriter) *protoco
 	}
 
 	return logInfo
+}
+
+//doOutputCallbacks 运行所有地输出回调函数
+func (r *requestLog) doOutputCallbacks(ctx *gin.Context, logInfo *protocol_go.SingleLogInfo) {
+	// 简简单单并发执行所有输出回调（包括默认的info日志输出回调）
+	wg := sync.WaitGroup{}
+	for _, outputCallback := range r.outputCallbacks {
+		wg.Add(1)
+		go func(callback outputFunc) {
+			defer wg.Done()
+			callback(ctx, logInfo)
+		}(outputCallback)
+	}
+	wg.Wait()
+}
+
+//getRequestBody 获取请求参数
+func (r *requestLog) getRequestBody(ctx *gin.Context) string {
+
+	// read请求参数
+	reqBytes, err := ioutil.ReadAll(ctx.Request.Body)
+	if err != nil {
+		log.Errorf("Pharse Request Json Param Error err = %v", err)
+		return "请求参数解析错误"
+	}
+
+	return string(reqBytes)
+}
+
+//getStatus 获取处理状态
+func (r *requestLog) getStatus(ctx *gin.Context) string {
+	if ctx.IsAborted() {
+		return "失败"
+	}
+	return "成功"
 }
 
 //stdoutLogWriter 标准输出日志信息
