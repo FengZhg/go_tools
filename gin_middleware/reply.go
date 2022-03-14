@@ -2,7 +2,7 @@ package gin_middleware
 
 import (
 	"github.com/FengZhg/go_tools/errs"
-	"github.com/FengZhg/go_tools/protocol_go"
+	"github.com/FengZhg/go_tools/go_protocol"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -23,7 +23,7 @@ func replyMiddleware(ctx *gin.Context) {
 	// 判断是否有错误
 	if len(ctx.Errors) != 0 {
 		err := ctx.Errors[0].Err
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, &protocol_go.StandardRsp{
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, &go_protocol.StandardRsp{
 			Status: errs.GetErrorCode(err),
 			Error:  errs.GetErrorMsg(err),
 		})

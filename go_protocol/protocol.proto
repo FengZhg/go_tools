@@ -1,5 +1,5 @@
 syntax = "proto3";
-package protocol_go;
+package go_protocol;
 
 option go_package = "./go_protocol";
 

@@ -5,7 +5,7 @@ package gin_middleware
 import (
 	"bytes"
 	"github.com/FengZhg/goLogin"
-	"github.com/FengZhg/go_tools/protocol_go"
+	"github.com/FengZhg/go_tools/go_protocol"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
@@ -19,8 +19,8 @@ const (
 )
 
 type (
-	outputFunc func(*gin.Context, *protocol_go.SingleLogInfo)
-	enrichFunc func(*gin.Context, *protocol_go.SingleLogInfo)
+	outputFunc func(*gin.Context, *go_protocol.SingleLogInfo)
+	enrichFunc func(*gin.Context, *go_protocol.SingleLogInfo)
 )
 
 //用于打印请求相应情况中间件
@@ -62,12 +62,12 @@ func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 }
 
 //buildLogInfo 构建一条日志
-func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *protocol_go.SingleLogInfo {
+func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *go_protocol.SingleLogInfo {
 
 	// 获取登录态
 	loginInfo, _ := goLogin.GetLoginInfo(ctx)
 	// 构造日志
-	logInfo := &protocol_go.SingleLogInfo{
+	logInfo := &go_protocol.SingleLogInfo{
 		LogType:   defaultLogType,
 		Id:        loginInfo.GetId(),
 		FullPath:  ctx.FullPath(),
@@ -87,7 +87,7 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *protocol_go
 }
 
 //doOutputCallbacks 运行所有地输出回调函数
-func (r *requestLog) doOutputCallbacks(ctx *gin.Context, logInfo *protocol_go.SingleLogInfo) {
+func (r *requestLog) doOutputCallbacks(ctx *gin.Context, logInfo *go_protocol.SingleLogInfo) {
 	// 简简单单并发执行所有输出回调（包括默认的info日志输出回调）
 	wg := sync.WaitGroup{}
 	for _, outputCallback := range r.outputCallbacks {
@@ -122,7 +122,7 @@ func (r *requestLog) getStatus(ctx *gin.Context) string {
 }
 
 //stdCallback 标准输出日志信息
-func stdCallback(ctx *gin.Context, logInfo *protocol_go.SingleLogInfo) {
+func stdCallback(ctx *gin.Context, logInfo *go_protocol.SingleLogInfo) {
 	log.Info("LoginInfo ID:%v\tFull Path:%v\tReq Body:%v\tRsp:%v", logInfo.GetId(), logInfo.GetFullPath(),
 		logInfo.GetReq(), logInfo.GetMessage())
 }

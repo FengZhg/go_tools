@@ -3,11 +3,14 @@ module github.com/FengZhg/go_tools/gin_middleware
 go 1.17
 
 require (
-	github.com/FengZhg/goLogin v0.0.0-20220311061427-9bce2a0045e9
-	github.com/FengZhg/go_tools/errs v0.0.0-20220314074615-1792eee2afca
-	github.com/FengZhg/go_tools/protocol_go v0.0.0-20220311100239-187aa2cf1ba1
+	github.com/FengZhg/goLogin v0.0.0-20220314082802-7542d3f77b50
+	github.com/FengZhg/go_tools/errs v0.0.0-20220314080905-8f34046cac0c
+	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220314080905-8f34046cac0c
 	github.com/gin-gonic/gin v1.7.7
 	github.com/sirupsen/logrus v1.8.1
+)
+
+require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -28,5 +31,3 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
-
-replace github.com/FengZhg/go_tools/ => ../
