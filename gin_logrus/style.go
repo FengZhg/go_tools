@@ -1,4 +1,4 @@
-package logrus_gin_log
+package gin_logrus
 
 import (
 	"bytes"
@@ -31,8 +31,8 @@ const (
 
 // 日志文件输出路径
 var (
-	logDirPath  = "logrus_gin_log/"
-	logFilePath = "default.logrus_gin_log"
+	logDirPath  = "log/"
+	logFilePath = "default.log"
 )
 
 //----------------------------------------//
@@ -67,7 +67,7 @@ func initLogFilePath() {
 
 	// 兜底判断
 	if len(exePath) > 0 {
-		logFilePath = logDirPath + exePath + ".logrus_gin_log"
+		logFilePath = logDirPath + exePath + ".gin_logrus"
 	}
 }
 
