@@ -1,4 +1,4 @@
-package protocol_go
+package go_protocol
 
 import "github.com/FengZhg/go_tools/errs"
 

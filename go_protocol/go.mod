@@ -1,4 +1,4 @@
-module github.com/FengZhg/go_tools/protocol_go
+module github.com/FengZhg/go_tools/go_protocol
 
 go 1.17
 
