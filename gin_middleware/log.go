@@ -19,18 +19,18 @@ const (
 )
 
 type (
-	outputFunc func(*gin.Context, *go_protocol.SingleLogInfo)
-	enrichFunc func(*gin.Context, *go_protocol.SingleLogInfo)
+	OutputFunc func(*gin.Context, *go_protocol.SingleLogInfo)
+	EnrichFunc func(*gin.Context, *go_protocol.SingleLogInfo)
 )
 
 //用于打印请求相应情况中间件
 type requestLog struct {
-	outputCallbacks []outputFunc // 输出日志信息的回调函数（默认已有log.info()）
-	enrichHook      enrichFunc   // 丰富日志信息的钩子
+	outputCallbacks []OutputFunc // 输出日志信息的回调函数（默认已有log.info()）
+	enrichHook      EnrichFunc   // 丰富日志信息的钩子
 }
 
 //NewRequestLog 新建请求日志结构体
-func NewRequestLog(outputCallbacks []outputFunc, enrichHook enrichFunc) *requestLog {
+func NewRequestLog(outputCallbacks []OutputFunc, enrichHook EnrichFunc) *requestLog {
 	//stdCallback 输出时配logrus Formater文件内容，会输出到文件
 	outputCallbacks = append(outputCallbacks, stdCallback)
 	return &requestLog{
@@ -92,7 +92,7 @@ func (r *requestLog) doOutputCallbacks(ctx *gin.Context, logInfo *go_protocol.Si
 	wg := sync.WaitGroup{}
 	for _, outputCallback := range r.outputCallbacks {
 		wg.Add(1)
-		go func(callback outputFunc) {
+		go func(callback OutputFunc) {
 			defer wg.Done()
 			callback(ctx, logInfo)
 		}(outputCallback)
