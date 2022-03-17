@@ -6,5 +6,5 @@ import (
 
 type JwtStatus = struct {
 	LoginStatus
-	jwt.StandardClaims
+	*jwt.StandardClaims
 }
