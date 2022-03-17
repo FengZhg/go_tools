@@ -14,10 +14,6 @@ message StandardRsp {
 message LoginStatus {
   string id       = 1; // 用户id
   string token    = 2; // 用户token
-  //string mode  = 3; // 用户操作模式 1：个人注册  2：单位注册  3：修改  4：信息员变更   5：管理员登录
-  string ip       = 4; // 用户ip
-  //bool   admin      = 6; // 管理员标志
-  int32  passStep = 8; // 校验通过情况
   string prefix   = 9; // 前缀
 }
 

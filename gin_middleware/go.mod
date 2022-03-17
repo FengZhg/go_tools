@@ -1,6 +1,6 @@
 module github.com/FengZhg/go_tools/gin_middleware
 
-go 1.17
+go 1.18
 
 require (
 	github.com/FengZhg/goLogin v0.0.0-20220314082802-7542d3f77b50

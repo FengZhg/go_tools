@@ -1,6 +1,6 @@
 module github.com/FengZhg/go_tools/logrus_gin_log
 
-go 1.17
+go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.7.7

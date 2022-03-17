@@ -161,5 +161,4 @@ func initLogMultiWriter() {
 
 	// 修改logrus默认输出writer
 	log.SetOutput(multiWriter)
-
 }

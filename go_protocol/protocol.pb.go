@@ -88,11 +88,9 @@ func (m *StandardRsp) GetMessage() string {
 
 // 登录态结构
 type LoginStatus struct {
-	Id    string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Token string `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
-	//string mode  = 3; // 用户操作模式 1：个人注册  2：单位注册  3：修改  4：信息员变更   5：管理员登录
-	Ip string `protobuf:"bytes,4,opt,name=ip,proto3" json:"ip,omitempty"`
-	//bool   admin      = 6; // 管理员标志
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Ip                   string   `protobuf:"bytes,4,opt,name=ip,proto3" json:"ip,omitempty"`
 	PassStep             int32    `protobuf:"varint,8,opt,name=passStep,proto3" json:"passStep,omitempty"`
 	Prefix               string   `protobuf:"bytes,9,opt,name=prefix,proto3" json:"prefix,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
