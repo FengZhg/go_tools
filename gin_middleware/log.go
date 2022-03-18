@@ -4,7 +4,7 @@ package gin_middleware
 
 import (
 	"bytes"
-	"github.com/FengZhg/goLogin"
+	"github.com/FengZhg/go_tools/goJwt"
 	"github.com/FengZhg/go_tools/go_protocol"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -63,11 +63,11 @@ func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 //buildLogInfo 构建一条日志
 func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *go_protocol.SingleLogInfo {
 	// 获取登录态
-	loginInfo, _ := goLogin.GetLoginInfo(ctx)
+	loginInfo, _ := goJwt.GetLoginInfo(ctx)
 	// 构造日志
 	logInfo := &go_protocol.SingleLogInfo{
 		LogType:   defaultLogType,
-		Id:        loginInfo.GetId(),
+		Id:        loginInfo.GetUid(),
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
 		Req:       r.getRequestBody(ctx),
