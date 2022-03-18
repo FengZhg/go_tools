@@ -57,29 +57,3 @@ func enrichGoJwtES(priPath, pubPath string, g *goJwt) {
 	g.privateKey = priKey
 	g.publicKey = pubKey
 }
-
-func (g *goJwt) GetPrivateKey() *ecdsa.PrivateKey {
-	if g == nil {
-		return nil
-	}
-	return g.privateKey
-}
-func (g *goJwt) GetPublicKey() *ecdsa.PublicKey {
-	if g == nil {
-		return nil
-	}
-	return g.publicKey
-}
-
-func (g *goJwt) GetTypeKey() string {
-	if g == nil {
-		return ""
-	}
-	return g.typeKey
-}
-func (g *goJwt) GetAlg() string {
-	if g == nil {
-		return ""
-	}
-	return g.alg
-}
