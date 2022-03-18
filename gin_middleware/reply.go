@@ -16,7 +16,6 @@ func ReplyMiddleware() gin.HandlerFunc {
 
 //生成错误响应的返回结果
 func replyMiddleware(ctx *gin.Context) {
-
 	// 等待请求响应结束
 	ctx.Next()
 

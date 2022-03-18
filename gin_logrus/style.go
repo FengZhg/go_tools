@@ -128,7 +128,6 @@ func (m *Formatter) getLevelColor(level log.Level) string {
 
 //getRotateWriter 获取到文件输出的writer
 func getRotateWriter() io.Writer {
-
 	//初始画rotateLog Writer
 	rotateLog, err := rotateLogs.New(
 		logDirPath+logFilePath+".%Y%m%d",
@@ -140,13 +139,11 @@ func getRotateWriter() io.Writer {
 		log.Errorf("Init Rotatelog Error err = %v", err)
 		return nil
 	}
-
 	return rotateLog
 }
 
 //initLogMultiWriter 初始化日志的多重输出
 func initLogMultiWriter() {
-
 	// 构造writer
 	writers, rotateLog := []io.Writer{os.Stdout}, getRotateWriter()
 	if rotateLog != nil {

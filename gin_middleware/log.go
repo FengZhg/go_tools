@@ -48,7 +48,6 @@ func (r *requestLog) RequestLogMiddleware() gin.HandlerFunc {
 
 //requestLogMiddleware 打印请求和返回体的中间件
 func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
-
 	// 创建BodyLogWriter
 	bw := &bodyWriter{body: bytes.NewBufferString(""), ResponseWriter: ctx.Writer}
 	ctx.Writer = bw
@@ -63,7 +62,6 @@ func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 
 //buildLogInfo 构建一条日志
 func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *go_protocol.SingleLogInfo {
-
 	// 获取登录态
 	loginInfo, _ := goLogin.GetLoginInfo(ctx)
 	// 构造日志
@@ -82,7 +80,6 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *go_protocol
 	if r.enrichHook != nil {
 		r.enrichHook(ctx, logInfo)
 	}
-
 	return logInfo
 }
 
@@ -102,14 +99,12 @@ func (r *requestLog) doOutputCallbacks(ctx *gin.Context, logInfo *go_protocol.Si
 
 //getRequestBody 获取请求参数
 func (r *requestLog) getRequestBody(ctx *gin.Context) string {
-
 	// read请求参数
 	reqBytes, err := ioutil.ReadAll(ctx.Request.Body)
 	if err != nil {
 		log.Errorf("Pharse Request Json Param Error err = %v", err)
 		return "请求参数解析错误"
 	}
-
 	return string(reqBytes)
 }
 
