@@ -35,7 +35,7 @@ func (g *goJwt) authMiddleware(ctx *gin.Context) {
 
 	// 解析登录态信息
 	jwtStatus := jwtToken.Claims.(*go_protocol.JwtStatus)
-	ctx.Set(contextTokenKey, jwtStatus.LoginStatus)
+	ctx.Set(contextTokenKey, jwtStatus)
 	ctx.Next()
 }
 

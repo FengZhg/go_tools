@@ -3,43 +3,41 @@ package goJwt
 import (
 	"github.com/FengZhg/go_tools/go_protocol"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 const (
 	contextTokenKey = "Authentication"
 )
 
-//GetLoginInfo 从ctx Keys获取登录态
-func GetLoginInfo(ctx *gin.Context) (*go_protocol.LoginStatus, error) {
+//GetJwtStatus 从ctx Keys获取jwt描述
+func GetJwtStatus(ctx *gin.Context) (*go_protocol.JwtStatus, error) {
 	// 从上下文火获取
-	loginInfoInterface, exist := ctx.Get(contextTokenKey)
+	jwtStatusInterface, exist := ctx.Get(contextTokenKey)
 	if !exist {
 		return nil, go_protocol.LoginInfoNotExistError
 	}
 
 	// reflect
-	loginInfo, ok := loginInfoInterface.(go_protocol.LoginStatus)
+	jwtStatus, ok := jwtStatusInterface.(go_protocol.JwtStatus)
 	if !ok {
 		return nil, go_protocol.LoginInfoNotExistError
 	}
 
 	// 判空
-	if loginInfo.GetUid() == "" || loginInfo.GetType() == "" {
+	if jwtStatus.GetUid() == "" || jwtStatus.GetType() == "" {
 		return nil, go_protocol.LoginInfoEmptyParamError
 	}
-	return &loginInfo, nil
+	return &jwtStatus, nil
 }
 
-//UpgradeLoginInfo 升级登录态
-func UpgradeLoginInfo(ctx *gin.Context, j *goJwt) (string, error) {
-	// 获取登录态
-	loginInfo, err := GetLoginInfo(ctx)
+//GetLoginInfo 从ctx Keys获取登录态
+func GetLoginInfo(ctx *gin.Context) (*go_protocol.LoginStatus, error) {
+
+	// 获取jwt描述
+	jwtStatus, err := GetJwtStatus(ctx)
 	if err != nil {
-		log.Errorf("Get Login Info Error err:%v", err)
-		return "", err
+		return nil, err
 	}
 
-	// 获取新的jwt描述，并且直接返回
-	return j.ApplyToken(loginInfo.GetUid())
+	return &jwtStatus.LoginStatus, nil
 }
