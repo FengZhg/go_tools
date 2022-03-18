@@ -1,12 +1,12 @@
 package go_protocol
 
 import (
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 type JwtStatus struct {
 	LoginStatus
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 func (j *JwtStatus) GetLoginStatus() *LoginStatus {
@@ -16,9 +16,9 @@ func (j *JwtStatus) GetLoginStatus() *LoginStatus {
 	return &j.LoginStatus
 }
 
-func (j *JwtStatus) GetStandardClaims() *jwt.StandardClaims {
+func (j *JwtStatus) GetRegisteredClaims() *jwt.RegisteredClaims {
 	if j == nil {
 		return nil
 	}
-	return &j.StandardClaims
+	return &j.RegisteredClaims
 }

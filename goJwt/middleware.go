@@ -2,8 +2,8 @@ package goJwt
 
 import (
 	"github.com/FengZhg/go_tools/go_protocol"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 	log "github.com/sirupsen/logrus"
 )
 

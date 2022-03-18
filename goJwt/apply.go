@@ -2,7 +2,7 @@ package goJwt
 
 import (
 	"github.com/FengZhg/go_tools/go_protocol"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v4"
 	log "github.com/sirupsen/logrus"
 	"time"
 )
@@ -26,9 +26,9 @@ func (g *goJwt) buildBaseClaim(uid string) *go_protocol.JwtStatus {
 			Uid:  uid,
 			Type: g.typeKey,
 		},
-		StandardClaims: jwt.StandardClaims{
+		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    g.typeKey,
-			ExpiresAt: time.Now().Add(15 * time.Minute).Unix(),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Minute)),
 		},
 	}
 }

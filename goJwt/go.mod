@@ -4,8 +4,8 @@ go 1.18
 
 require (
 	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220317134558-1cd6b04fc46f
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.7.7
+	github.com/golang-jwt/jwt/v4 v4.4.0
 	github.com/sirupsen/logrus v1.8.1
 )
 
