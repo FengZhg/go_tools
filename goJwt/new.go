@@ -1,4 +1,4 @@
-package jwt
+package goJwt
 
 //NewES512 初始化ES512 JWT
 func NewES512(priPath, pubPath, typeKey string) {

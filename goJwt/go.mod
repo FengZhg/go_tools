@@ -1,4 +1,4 @@
-module github.com/FengZhg/go_tools/jwt
+module github.com/FengZhg/go_tools/goJwt
 
 go 1.18
 

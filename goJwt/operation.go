@@ -1,4 +1,4 @@
-package jwt
+package goJwt
 
 import (
 	"github.com/FengZhg/go_tools/go_protocol"
