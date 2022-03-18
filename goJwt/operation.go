@@ -38,6 +38,5 @@ func GetLoginInfo(ctx *gin.Context) (*go_protocol.LoginStatus, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return &jwtStatus.LoginStatus, nil
 }
