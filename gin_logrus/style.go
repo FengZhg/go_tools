@@ -145,7 +145,7 @@ func getRotateWriter() io.Writer {
 //initLogMultiWriter 初始化日志的多重输出
 func initLogMultiWriter() {
 	// 构造writer
-	writers, rotateLog := []io.Writer{os.Stdout}, getRotateWriter()
+	writers, rotateLog := []io.Writer{}, getRotateWriter()
 	if rotateLog != nil {
 		writers = append(writers, rotateLog)
 	}
