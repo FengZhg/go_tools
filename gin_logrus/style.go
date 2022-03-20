@@ -61,13 +61,11 @@ func initLogFilePath() {
 		// 反正有兜底default
 		return
 	}
-
 	//分解可执行文件路径
 	_, exePath := filepath.Split(path)
-
 	// 兜底判断
 	if len(exePath) > 0 {
-		logFilePath = exePath + ".gin_logrus"
+		logFilePath = exePath + ".log"
 	}
 }
 
