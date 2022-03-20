@@ -67,7 +67,7 @@ func initLogFilePath() {
 
 	// 兜底判断
 	if len(exePath) > 0 {
-		logFilePath = logDirPath + exePath + ".gin_logrus"
+		logFilePath = exePath + ".gin_logrus"
 	}
 }
 
