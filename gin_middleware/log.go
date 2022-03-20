@@ -118,6 +118,6 @@ func (r *requestLog) getStatus(ctx *gin.Context) string {
 
 //stdCallback 标准输出日志信息
 func stdCallback(ctx *gin.Context, logInfo *go_protocol.SingleLogInfo) {
-	log.Info("LoginInfo ID:%v\tFull Path:%v\tReq Body:%v\tRsp:%v", logInfo.GetId(), logInfo.GetFullPath(),
+	log.Infof("LoginInfo ID:%v \tFull Path:%v \tReq Body:%v \tRsp:%v", logInfo.GetId(), logInfo.GetFullPath(),
 		logInfo.GetReq(), logInfo.GetMessage())
 }
