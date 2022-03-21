@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -48,6 +49,8 @@ func init() {
 	initLogFilePath()
 	//初始化并使用
 	initLogMultiWriter()
+	//初始化替换回车为空格钩子
+	initReplaceEnterHook()
 }
 
 //initLogFilePath 初始化日志文件存储路径
@@ -67,6 +70,22 @@ func initLogFilePath() {
 	if len(exePath) > 0 {
 		logFilePath = exePath + ".log"
 	}
+}
+
+// 替换回车的钩子结构体
+type replaceEnterHook struct{}
+
+func (r *replaceEnterHook) Levels() []log.Level {
+	return log.AllLevels
+}
+func (r *replaceEnterHook) Fire(entry *log.Entry) error {
+	entry.Message = strings.ReplaceAll(entry.Message, "\n", " ")
+	return nil
+}
+
+//initReplaceEnterHook 初始化替换回车的钩子
+func initReplaceEnterHook() {
+	log.AddHook(&replaceEnterHook{})
 }
 
 //----------------------------------------//
@@ -96,10 +115,10 @@ func (m *Formatter) Format(entry *log.Entry) ([]byte, error) {
 	//HasCaller()为true才会有调用信息
 	if entry.HasCaller() {
 		fName := filepath.Base(entry.Caller.File)
-		newLog = fmt.Sprintf("[%s]\t%v%s%v\t%s:%d\t%s:\t%s\n",
+		newLog = fmt.Sprintf("[%s] %v%s%v %s:%d %s: %s\n",
 			timestamp, levelColor, entry.Level, reset, fName, entry.Caller.Line, entry.Caller.Function, entry.Message)
 	} else {
-		newLog = fmt.Sprintf("[%s]\t%v%s%v:\t%s\n", levelColor, entry.Level, reset, timestamp, entry.Message)
+		newLog = fmt.Sprintf("[%s] %v%s%v: %s\n", levelColor, entry.Level, reset, timestamp, entry.Message)
 	}
 
 	b.WriteString(newLog)
