@@ -71,13 +71,7 @@ func NewES(priPath, pubPath, typeKey, alg string) *goJwtES {
 
 //ApplyToken 申请jwt的token
 func (g *goJwtES) ApplyToken(uid string) (string, error) {
-	// 获取方法函数
-	sig, err := jwt.NewWithClaims(jwt.GetSigningMethod(g.alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
-	if err != nil {
-		log.Errorf("Apply Token Sign Error err:%v", err)
-		return "", err
-	}
-	return sig, nil
+	return jwt.NewWithClaims(jwt.GetSigningMethod(g.alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
 }
 
 //buildBaseClaim 构造登录态
@@ -118,7 +112,6 @@ func (g *goJwtES) getClaimStrFromHeader(ctx *gin.Context) string {
 func (g *goJwtES) authMiddleware(ctx *gin.Context) {
 	//从请求头部获取jwt身份描述
 	claimStr := g.getClaimStrFromHeader(ctx)
-
 	// 进行校验
 	jwtToken, err := jwt.Parse(claimStr, func(token *jwt.Token) (interface{}, error) {
 		if checkSigningMethodType(g.alg, token.Method) {
