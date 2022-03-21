@@ -5,7 +5,6 @@ go 1.18
 require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
-	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.8.1
 )
 
@@ -25,7 +24,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
-	golang.org/x/sys v0.0.0-20220318055525-2edf467146b5 // indirect
+	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

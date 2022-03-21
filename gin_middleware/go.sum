@@ -1,9 +1,15 @@
 github.com/FengZhg/go_tools/errs v0.0.0-20220321075550-efc77ea34753 h1:EednsKAN2yRRYPMd/rqrj3SRINqLtla7GFa5KyDeunE=
 github.com/FengZhg/go_tools/errs v0.0.0-20220321075550-efc77ea34753/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
+github.com/FengZhg/go_tools/errs v0.0.0-20220321082938-6d29969398ce h1:2MeWzRy049a/gXl9DKUokTda5Xvwo0hfPG0tt32R+II=
+github.com/FengZhg/go_tools/errs v0.0.0-20220321082938-6d29969398ce/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
 github.com/FengZhg/go_tools/goJwt v0.0.0-20220321075550-efc77ea34753 h1:RivTgTcreqGtymraun/jVMLPiffqNe1Ubs6xltgoBRs=
 github.com/FengZhg/go_tools/goJwt v0.0.0-20220321075550-efc77ea34753/go.mod h1:rsrjjCnq6uxAkMpoHjW3VyiN1x1dHGR/3v8gkmihzTk=
+github.com/FengZhg/go_tools/goJwt v0.0.0-20220321082938-6d29969398ce h1:iKCIOXgStcbFPucWvJJDgYYKopm2e/L9Ku7ZXIqTIkk=
+github.com/FengZhg/go_tools/goJwt v0.0.0-20220321082938-6d29969398ce/go.mod h1:rsrjjCnq6uxAkMpoHjW3VyiN1x1dHGR/3v8gkmihzTk=
 github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321075550-efc77ea34753 h1:69f98KAbsVSbLHa1QrLWcPzBC3qafsT9TXewvsV44z4=
 github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321075550-efc77ea34753/go.mod h1:8t8Pc3qA2BE+30mIhdnBZIaPiKU9lVg7t9FuLMbi3UI=
+github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321082938-6d29969398ce h1:NoEgJezBmUf/Hi+oTEmCxPZvJbdJm+O/LGufaGbWE5Y=
+github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321082938-6d29969398ce/go.mod h1:8t8Pc3qA2BE+30mIhdnBZIaPiKU9lVg7t9FuLMbi3UI=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
@@ -72,6 +78,7 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/ugorji/go v1.1.7/go.mod h1:kZn38zHttfInRq0xu/PH0az30d+z6vm202qpg1oXVMw=
+github.com/ugorji/go v1.2.7 h1:qYhyWUUd6WbiM+C6JZAUkIJt/1WrjzNHY9+KCIjVqTo=
 github.com/ugorji/go v1.2.7/go.mod h1:nF9osbDWLy6bDVv/Rtoh6QgnvNDpmCalQV5urGCCS6M=
 github.com/ugorji/go/codec v1.1.7/go.mod h1:Ax+UKWsSmolVDwsd+7N3ZtXu+yMGCf907BLYF3GoBXY=
 github.com/ugorji/go/codec v1.2.7 h1:YPXUKf7fYbp/y8xloBqZOw2qaVggbfwMlI8WM3wZUJ0=

@@ -3,9 +3,9 @@ module github.com/FengZhg/go_tools/gin_middleware
 go 1.18
 
 require (
-	github.com/FengZhg/go_tools/errs v0.0.0-20220321075550-efc77ea34753
-	github.com/FengZhg/go_tools/goJwt v0.0.0-20220321075550-efc77ea34753
-	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321075550-efc77ea34753
+	github.com/FengZhg/go_tools/errs v0.0.0-20220321082938-6d29969398ce
+	github.com/FengZhg/go_tools/goJwt v0.0.0-20220321082938-6d29969398ce
+	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321082938-6d29969398ce
 	github.com/gin-gonic/gin v1.7.7
 	github.com/sirupsen/logrus v1.8.1
 )
