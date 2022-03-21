@@ -51,17 +51,19 @@ func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 	// 创建BodyLogWriter
 	bw := &bodyWriter{body: bytes.NewBufferString(""), ResponseWriter: ctx.Writer}
 	ctx.Writer = bw
+	// 获取请求体
+	reqStr := r.getRequestBody(ctx)
 	// 等待进一步执行
 	ctx.Next()
 
 	// 构建日志信息
-	logInfo := r.buildLogInfo(ctx, bw)
+	logInfo := r.buildLogInfo(ctx, bw, reqStr)
 	// 简简单单并发执行日志输出回调函数
 	r.doOutputCallbacks(ctx, logInfo)
 }
 
 //buildLogInfo 构建一条日志
-func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *go_protocol.SingleLogInfo {
+func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr string) *go_protocol.SingleLogInfo {
 	// 获取登录态
 	loginInfo, _ := goJwt.GetLoginInfo(ctx)
 	// 构造日志
@@ -70,7 +72,7 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter) *go_protocol
 		Id:        loginInfo.GetUid(),
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
-		Req:       r.getRequestBody(ctx),
+		Req:       reqStr,
 		Message:   bw.body.String(),
 		Time:      time.Now().Format("2006-01-02 15:04:05"),
 		TimeStamp: time.Now().Unix(),
@@ -105,6 +107,8 @@ func (r *requestLog) getRequestBody(ctx *gin.Context) string {
 		log.Errorf("Pharse Request Json Param Error err = %v", err)
 		return "请求参数解析错误"
 	}
+	// 将那玩意放回去
+	ctx.Request.Body = ioutil.NopCloser(bytes.NewBuffer(reqBytes))
 	return string(reqBytes)
 }
 
