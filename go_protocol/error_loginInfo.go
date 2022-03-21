@@ -11,5 +11,5 @@ const (
 
 var (
 	LoginInfoError         = errs.NewError(errorLoginInfo, "登录态错误，请重新登录")
-	LoginInfoNotExistError = errs.NewError(errorLoginInfoNotExist, "不存在")
+	LoginInfoNotExistError = errs.NewError(errorLoginInfoNotExist, "登录态不存在")
 )

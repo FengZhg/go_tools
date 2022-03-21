@@ -134,6 +134,6 @@ func (g *goJwtES) authMiddleware(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	ctx.Set(contextTokenKey, jwtStatus)
+	ctx.Set(contextTokenKey, *jwtStatus)
 	ctx.Next()
 }
