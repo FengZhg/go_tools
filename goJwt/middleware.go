@@ -31,6 +31,7 @@ func (g *goJwt) authMiddleware(ctx *gin.Context) {
 		log.Errorf("User Jwt Claim Verify Error err:%v", err)
 		ctx.Error(err)
 		ctx.Abort()
+		return
 	}
 
 	// 解析登录态信息

@@ -10,8 +10,7 @@ import (
 //ApplyToken 申请jwt的token
 func (g *goJwt) ApplyToken(uid string) (string, error) {
 	// 获取方法函数
-	method := jwt.GetSigningMethod(g.alg)
-	sig, err := method.Sign(g.buildBaseClaim(uid).String(), g.privateKey)
+	sig, err := jwt.NewWithClaims(jwt.GetSigningMethod(g.alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
 	if err != nil {
 		log.Errorf("Apply Token Sign Error err:%v", err)
 		return "", err

@@ -3,7 +3,6 @@ package gin_middleware
 import (
 	"github.com/FengZhg/go_tools/errs"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -30,9 +29,8 @@ func timeoutMiddleware(ctx *gin.Context) {
 	case <-time.After(PostTimeLimit):
 		ctx.Abort()
 		ctx.Error(errs.NewError(1001, "接口响应超时"))
-		break
+		return
 	case <-requestDoneChannel:
-		log.Debugf("interface = %v Done !", ctx.Request.RequestURI)
-		break
+		return
 	}
 }
