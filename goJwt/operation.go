@@ -25,7 +25,7 @@ func GetJwtStatus(ctx *gin.Context) (*go_protocol.JwtStatus, error) {
 
 	// 判空
 	if jwtStatus.GetUid() == "" || jwtStatus.GetType() == "" {
-		return nil, go_protocol.LoginInfoEmptyParamError
+		return nil, go_protocol.LoginInfoError
 	}
 	return &jwtStatus, nil
 }

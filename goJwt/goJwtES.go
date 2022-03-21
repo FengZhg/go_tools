@@ -114,14 +114,14 @@ func (g *goJwtES) authMiddleware(ctx *gin.Context) {
 	claimStr := g.getClaimStrFromHeader(ctx)
 	// 进行校验
 	jwtToken, err := jwt.Parse(claimStr, func(token *jwt.Token) (interface{}, error) {
-		if checkSigningMethodType(g.alg, token.Method) {
+		if !checkSigningMethodType(g.alg, token.Method) {
 			return nil, fmt.Errorf("signing Method Not Match")
 		}
 		return g.publicKey, nil
 	})
 	if err != nil {
 		log.Errorf("User Jwt Claim Verify Error err:%v", err)
-		ctx.Error(go_protocol.LoginInfoEmptyParamError)
+		ctx.Error(go_protocol.LoginInfoError)
 		ctx.Abort()
 		return
 	}
