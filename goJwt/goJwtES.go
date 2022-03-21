@@ -113,7 +113,7 @@ func (g *goJwtES) authMiddleware(ctx *gin.Context) {
 	//从请求头部获取jwt身份描述
 	claimStr := g.getClaimStrFromHeader(ctx)
 	// 进行校验
-	jwtToken, err := jwt.Parse(claimStr, func(token *jwt.Token) (interface{}, error) {
+	jwtToken, err := jwt.ParseWithClaims(claimStr, &go_protocol.JwtStatus{}, func(token *jwt.Token) (interface{}, error) {
 		if !checkSigningMethodType(g.alg, token.Method) {
 			return nil, fmt.Errorf("signing Method Not Match")
 		}
@@ -127,7 +127,13 @@ func (g *goJwtES) authMiddleware(ctx *gin.Context) {
 	}
 
 	// 解析登录态信息
-	jwtStatus := jwtToken.Claims.(*go_protocol.JwtStatus)
+	jwtStatus, ok := jwtToken.Claims.(*go_protocol.JwtStatus)
+	if !ok || !jwtToken.Valid {
+		log.Errorf("User Jwt Token Error relfect ok:%v\tToken Valid:%v", ok, jwtToken.Valid)
+		ctx.Error(go_protocol.LoginInfoError)
+		ctx.Abort()
+		return
+	}
 	ctx.Set(contextTokenKey, jwtStatus)
 	ctx.Next()
 }
