@@ -30,7 +30,7 @@ type requestLog struct {
 }
 
 //NewRequestLog 新建请求日志结构体
-func NewRequestLog(outputCallbacks []OutputFunc, enrichHook EnrichFunc) *requestLog {
+func NewRequestLog(enrichHook EnrichFunc, outputCallbacks ...OutputFunc) *requestLog {
 	//stdCallback 输出时配logrus Formater文件内容，会输出到文件
 	outputCallbacks = append(outputCallbacks, stdCallback)
 	return &requestLog{
