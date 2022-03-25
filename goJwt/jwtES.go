@@ -11,14 +11,14 @@ import (
 	"time"
 )
 
-//goJwtES JWT封装
-type goJwtES struct {
+//JwtES JWT封装
+type JwtES struct {
 	TypeKey, Alg, PriPath, PubPath string
 	privateKey                     *ecdsa.PrivateKey
 	publicKey                      *ecdsa.PublicKey
 }
 
-type GoJwtESOpt func(g *goJwtES)
+type JwtESOpt func(g *JwtES)
 
 const (
 	jwtHeaderKey = "token"
@@ -28,9 +28,9 @@ const (
 // 初始化jwt ES 相关
 //-----------------------------------------------------//
 
-func newESDefault() *goJwtES {
+func newESDefault() *JwtES {
 	// 默认结构体
-	return &goJwtES{
+	return &JwtES{
 		PriPath: privatePath,
 		PubPath: publicPath,
 		TypeKey: defaultTypeKey,
@@ -41,7 +41,7 @@ func newESDefault() *goJwtES {
 //默认private key path : ./config/private.ec.key
 //默认public key path  : ./config/public.pem
 //默认type key         ： default
-func NewES512(opts ...GoJwtESOpt) *goJwtES {
+func NewES512(opts ...JwtESOpt) *JwtES {
 	// 初始化默认GoJwt
 	g := newESDefault()
 	g.Alg = jwt.SigningMethodES512.Alg()
@@ -55,7 +55,7 @@ func NewES512(opts ...GoJwtESOpt) *goJwtES {
 }
 
 //initECKey 初始化goJwtES
-func (g *goJwtES) initECKey() *goJwtES {
+func (g *JwtES) initECKey() *JwtES {
 	// 读取文件私钥
 	priStr, err := ioutil.ReadFile(g.PriPath)
 	if err != nil {
@@ -91,12 +91,12 @@ func (g *goJwtES) initECKey() *goJwtES {
 //-----------------------------------------------------//
 
 //ApplyToken 申请jwt的token
-func (g *goJwtES) ApplyToken(uid string) (string, error) {
+func (g *JwtES) ApplyToken(uid string) (string, error) {
 	return jwt.NewWithClaims(jwt.GetSigningMethod(g.Alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
 }
 
 //buildBaseClaim 构造登录态
-func (g *goJwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
+func (g *JwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
 	return &go_protocol.JwtStatus{
 		LoginStatus: go_protocol.LoginStatus{
 			Uid:  uid,
@@ -114,19 +114,19 @@ func (g *goJwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
 //-----------------------------------------------------//
 
 //AuthMiddleware 获取jwt身份校验中间件
-func (g *goJwtES) AuthMiddleware() gin.HandlerFunc {
+func (g *JwtES) AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		g.authMiddleware(ctx)
 	}
 }
 
 //getClaimStrFromHeader 从请求头部获取jwt身份描述信息
-func (g *goJwtES) getClaimStrFromHeader(ctx *gin.Context) string {
+func (g *JwtES) getClaimStrFromHeader(ctx *gin.Context) string {
 	return ctx.GetHeader(jwtHeaderKey)
 }
 
 //authMiddleware jwt身份校验中间件
-func (g *goJwtES) authMiddleware(ctx *gin.Context) {
+func (g *JwtES) authMiddleware(ctx *gin.Context) {
 	//从请求头部获取jwt身份描述
 	claimStr := g.getClaimStrFromHeader(ctx)
 	// 进行校验
