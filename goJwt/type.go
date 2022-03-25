@@ -2,6 +2,12 @@ package goJwt
 
 import "github.com/golang-jwt/jwt/v4"
 
+var (
+	privatePath    = "./config/private.ec.key"
+	publicPath     = "./config/public.pem"
+	defaultTypeKey = "default"
+)
+
 //checkSigningMethodType 校验签名函数的类型是否正确
 func checkSigningMethodType(alg string, method jwt.SigningMethod) (ok bool) {
 	switch alg {
