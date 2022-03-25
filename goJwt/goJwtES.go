@@ -20,6 +20,10 @@ type goJwtES struct {
 
 type GoJwtESOpt func(g *goJwtES)
 
+const (
+	jwtHeaderKey = "token"
+)
+
 //-----------------------------------------------------//
 // 初始化jwt ES 相关
 //-----------------------------------------------------//
@@ -108,10 +112,6 @@ func (g *goJwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
 //-----------------------------------------------------//
 // jwt ES中间件相关
 //-----------------------------------------------------//
-
-const (
-	jwtHeaderKey = "token"
-)
 
 //AuthMiddleware 获取jwt身份校验中间件
 func (g *goJwtES) AuthMiddleware() gin.HandlerFunc {

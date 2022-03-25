@@ -1,5 +1,7 @@
 github.com/FengZhg/go_tools/errs v0.0.0-20220321123133-b440816b5b4c h1:RXh3UWMcq2Yb4Nagfemeq3RrTnhOgW1BWNDqMJZBaA0=
 github.com/FengZhg/go_tools/errs v0.0.0-20220321123133-b440816b5b4c/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
+github.com/FengZhg/go_tools/errs v0.0.0-20220325072001-39b1755404e6 h1:b40tb44jYyTM7T8j1wNQiaL3eaEyQVljn7jtw6oIutM=
+github.com/FengZhg/go_tools/errs v0.0.0-20220325072001-39b1755404e6/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

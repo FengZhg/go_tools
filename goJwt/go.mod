@@ -3,14 +3,14 @@ module github.com/FengZhg/go_tools/goJwt
 go 1.18
 
 require (
-	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220321123133-b440816b5b4c
+	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220325072001-39b1755404e6
 	github.com/gin-gonic/gin v1.7.7
 	github.com/golang-jwt/jwt/v4 v4.4.0
 	github.com/sirupsen/logrus v1.8.1
 )
 
 require (
-	github.com/FengZhg/go_tools/errs v0.0.0-20220321123133-b440816b5b4c // indirect
+	github.com/FengZhg/go_tools/errs v0.0.0-20220325072001-39b1755404e6 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
