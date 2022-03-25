@@ -10,33 +10,22 @@ const (
 )
 
 //GetJwtStatus 从ctx Keys获取jwt描述
-func GetJwtStatus(ctx *gin.Context) (*go_protocol.JwtStatus, error) {
+func GetJwtStatus(ctx *gin.Context) *go_protocol.JwtStatus {
 	// 从上下文火获取
 	jwtStatusInterface, exist := ctx.Get(contextTokenKey)
 	if !exist {
-		return nil, go_protocol.LoginInfoNotExistError
+		return nil
 	}
 
 	// reflect
 	jwtStatus, ok := jwtStatusInterface.(go_protocol.JwtStatus)
 	if !ok {
-		return nil, go_protocol.LoginInfoNotExistError
+		return nil
 	}
-
-	// 判空
-	if jwtStatus.GetUid() == "" || jwtStatus.GetType() == "" {
-		return nil, go_protocol.LoginInfoError
-	}
-	return &jwtStatus, nil
+	return &jwtStatus
 }
 
 //GetLoginInfo 从ctx Keys获取登录态
-func GetLoginInfo(ctx *gin.Context) (*go_protocol.LoginStatus, error) {
-
-	// 获取jwt描述
-	jwtStatus, err := GetJwtStatus(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return &jwtStatus.LoginStatus, nil
+func GetLoginInfo(ctx *gin.Context) *go_protocol.LoginStatus {
+	return GetJwtStatus(ctx).GetLoginStatus()
 }
