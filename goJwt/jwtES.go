@@ -4,6 +4,7 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 	"github.com/FengZhg/go_tools/go_protocol"
+	"github.com/FengZhg/go_tools/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	log "github.com/sirupsen/logrus"
@@ -154,7 +155,7 @@ func (g *JwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
 			Type: g.opts.typeKey,
 		},
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    g.opts.typeKey,
+			Issuer:    utils.GetExeFileName() + g.opts.typeKey,
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Minute)),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

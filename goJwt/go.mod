@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220325072001-39b1755404e6
+	github.com/FengZhg/go_tools/utils v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/gin v1.7.7
 	github.com/golang-jwt/jwt/v4 v4.4.0
 	github.com/sirupsen/logrus v1.8.1
@@ -30,3 +31,5 @@ require (
 )
 
 replace github.com/FengZhg/go_tools/go_protocol => ../go_protocol
+
+replace github.com/FengZhg/go_tools/utils => ../utils

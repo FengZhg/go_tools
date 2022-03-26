@@ -3,6 +3,7 @@ package gin_logrus
 import (
 	"bytes"
 	"fmt"
+	"github.com/FengZhg/go_tools/utils"
 	"io"
 	"os"
 	"path/filepath"
@@ -46,30 +47,11 @@ func init() {
 	//使用自定义方式构造日志
 	log.SetFormatter(&Formatter{})
 	//初始化日志输出文件路径
-	initLogFilePath()
+	logFilePath = utils.GetExeFileName() + ".log"
 	//初始化并使用
 	initLogMultiWriter()
 	//初始化替换回车为空格钩子
 	initReplaceEnterHook()
-}
-
-//initLogFilePath 初始化日志文件存储路径
-func initLogFilePath() {
-
-	//获取可执行文件路径
-	path, err := os.Executable()
-	if err != nil {
-		// 由于此时日志文件尚未正常加载，我也不知道会输出到哪，随便吧
-		log.Errorf("Get Exec File Path Error err = %v", err)
-		// 反正有兜底default
-		return
-	}
-	//分解可执行文件路径
-	_, exePath := filepath.Split(path)
-	// 兜底判断
-	if len(exePath) > 0 {
-		logFilePath = exePath + ".log"
-	}
 }
 
 // 替换回车的钩子结构体

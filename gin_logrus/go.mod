@@ -3,6 +3,7 @@ module github.com/FengZhg/go_tools/gin_logrus
 go 1.18
 
 require (
+	github.com/FengZhg/go_tools/utils v0.0.0-20220326110030-77e31de815ce
 	github.com/gin-gonic/gin v1.7.7
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/sirupsen/logrus v1.8.1
@@ -24,10 +25,10 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064 // indirect
-	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
+	golang.org/x/sys v0.0.0-20220325203850-36772127a21f // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-replace github.com/FengZhg/go_tools => ../
+replace github.com/FengZhg/go_tools/utils => ../utils
