@@ -13,77 +13,128 @@ import (
 
 //JwtES JWT封装
 type JwtES struct {
-	TypeKey, Alg, PriPath, PubPath string
-	privateKey                     *ecdsa.PrivateKey
-	publicKey                      *ecdsa.PublicKey
+	opts       *jwtESOptions
+	privateKey *ecdsa.PrivateKey
+	publicKey  *ecdsa.PublicKey
 }
 
-type JwtESOpt func(g *JwtES)
+type jwtESOptions struct {
+	typeKey, alg, priPath, pubPath, tokenHeaderKey string
+}
+type JwtESOption interface {
+	apply(*jwtESOptions)
+}
 
-const (
-	jwtHeaderKey = "token"
-)
+type funcJwtESOption struct {
+	f func(*jwtESOptions)
+}
+
+func (f *funcJwtESOption) apply(do *jwtESOptions) {
+	if f != nil {
+		f.f(do)
+	}
+}
+
+//newFuncJwtESOption 新构建初始化函数
+func newFuncJwtESOption(f func(options *jwtESOptions)) *funcJwtESOption {
+	return &funcJwtESOption{
+		f: f,
+	}
+}
+
+//WithTypeKey 自定义typeKey
+func WithTypeKey(typeKey string) JwtESOption {
+	return newFuncJwtESOption(func(options *jwtESOptions) {
+		options.typeKey = typeKey
+	})
+}
+
+//WithPriPath 自定义私钥路径
+func WithPriPath(priPath string) JwtESOption {
+	return newFuncJwtESOption(func(options *jwtESOptions) {
+		options.priPath = priPath
+	})
+}
+
+//WithPubPath 自定义公钥路径
+func WithPubPath(pubPath string) JwtESOption {
+	return newFuncJwtESOption(func(options *jwtESOptions) {
+		options.pubPath = pubPath
+	})
+}
+
+//WithAlg 自定义ECDSA类型
+func WithAlg(alg string) JwtESOption {
+	return newFuncJwtESOption(func(options *jwtESOptions) {
+		options.alg = alg
+	})
+}
+
+//WithTokenHeaderKey 自定义TokenHeaderKey
+func WithTokenHeaderKey(tokenHeaderKey string) JwtESOption {
+	return newFuncJwtESOption(func(options *jwtESOptions) {
+		options.tokenHeaderKey = tokenHeaderKey
+	})
+}
 
 //-----------------------------------------------------//
 // 初始化jwt ES 相关
 //-----------------------------------------------------//
 
-func newESDefault() *JwtES {
+//默认private key path : ./config/private.ec.key
+//默认public key path  : ./config/public.pem
+//默认type key         ： default
+//defaultJwtES 获取默认ES选项
+func defaultJwtES() *jwtESOptions {
 	// 默认结构体
-	return &JwtES{
-		PriPath: privatePath,
-		PubPath: publicPath,
-		TypeKey: defaultTypeKey,
+	return &jwtESOptions{
+		priPath:        defaultPrivatePath,
+		pubPath:        defaultPublicPath,
+		typeKey:        defaultTypeKey,
+		alg:            jwt.SigningMethodES512.Alg(),
+		tokenHeaderKey: defaultTokenHeaderKey,
 	}
 }
 
 //NewES512 初始化ES512 JWT
-//默认private key path : ./config/private.ec.key
-//默认public key path  : ./config/public.pem
-//默认type key         ： default
-func NewES512(opts ...JwtESOpt) *JwtES {
+func NewES512(opts ...JwtESOption) *JwtES {
 	// 初始化默认GoJwt
-	g := newESDefault()
-	g.Alg = jwt.SigningMethodES512.Alg()
+	g := defaultJwtES()
 	// 调用opts函数
+	opts = append(opts, WithAlg(jwt.SigningMethodES512.Alg()))
 	for _, opt := range opts {
-		opt(g)
+		opt.apply(g)
 	}
-	// 读取key
-	g.initECKey()
-	return g
+	return initES(g)
 }
 
-//initECKey 初始化goJwtES
-func (g *JwtES) initECKey() *JwtES {
+//initES 初始化goJwtES
+func initES(options *jwtESOptions) *JwtES {
 	// 读取文件私钥
-	priStr, err := ioutil.ReadFile(g.PriPath)
+	priStr, err := ioutil.ReadFile(options.priPath)
 	if err != nil {
-		log.Errorf("Read ES Private Key File Error err:%v", err)
 		panic(err)
 	}
 	// 读取文件公钥
-	pubStr, err := ioutil.ReadFile(g.PubPath)
+	pubStr, err := ioutil.ReadFile(options.pubPath)
 	if err != nil {
-		log.Errorf("Read ES Public Key File Error err:%v", err)
 		panic(err)
 	}
 	// 构建私钥
 	priKey, err := jwt.ParseECPrivateKeyFromPEM(priStr)
 	if err != nil {
-		log.Errorf("Parse ES Private Key Error err:%v", err)
 		panic(err)
 	}
 	// 构建公钥
 	pubKey, err := jwt.ParseECPublicKeyFromPEM(pubStr)
 	if err != nil {
-		log.Errorf("Parse ES Private Key Error err:%v", err)
 		panic(err)
 	}
-	// 构建结构体
-	g.privateKey = priKey
-	g.publicKey = pubKey
-	return g
+	return &JwtES{
+		privateKey: priKey,
+		publicKey:  pubKey,
+		opts:       options,
+	}
 }
 
 //-----------------------------------------------------//
@@ -92,7 +143,7 @@ func (g *JwtES) initECKey() *JwtES {
 
 //ApplyToken 申请jwt的token
 func (g *JwtES) ApplyToken(uid string) (string, error) {
-	return jwt.NewWithClaims(jwt.GetSigningMethod(g.Alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
+	return jwt.NewWithClaims(jwt.GetSigningMethod(g.opts.alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
 }
 
 //buildBaseClaim 构造登录态
@@ -100,11 +151,13 @@ func (g *JwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
 	return &go_protocol.JwtStatus{
 		LoginStatus: go_protocol.LoginStatus{
 			Uid:  uid,
-			Type: g.TypeKey,
+			Type: g.opts.typeKey,
 		},
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    g.TypeKey,
+			Issuer:    g.opts.typeKey,
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Minute)),
+			NotBefore: jwt.NewNumericDate(time.Now()),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 	}
 }
@@ -122,7 +175,7 @@ func (g *JwtES) AuthMiddleware() gin.HandlerFunc {
 
 //getClaimStrFromHeader 从请求头部获取jwt身份描述信息
 func (g *JwtES) getClaimStrFromHeader(ctx *gin.Context) string {
-	return ctx.GetHeader(jwtHeaderKey)
+	return ctx.GetHeader(g.opts.tokenHeaderKey)
 }
 
 //authMiddleware jwt身份校验中间件
@@ -132,7 +185,7 @@ func (g *JwtES) authMiddleware(ctx *gin.Context) {
 	// 进行校验
 	jwtToken, err := jwt.ParseWithClaims(claimStr, &go_protocol.JwtStatus{},
 		func(token *jwt.Token) (interface{}, error) {
-			if !checkSigningMethodType(g.Alg, token.Method) {
+			if !checkSigningMethodType(g.opts.alg, token.Method) {
 				return nil, fmt.Errorf("signing Method Not Match")
 			}
 			return g.publicKey, nil

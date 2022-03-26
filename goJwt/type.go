@@ -3,9 +3,10 @@ package goJwt
 import "github.com/golang-jwt/jwt/v4"
 
 var (
-	privatePath    = "./config/private.ec.key"
-	publicPath     = "./config/public.pem"
-	defaultTypeKey = "default"
+	defaultPrivatePath    = "./config/private.ec.key"
+	defaultPublicPath     = "./config/public.pem"
+	defaultTypeKey        = "default"
+	defaultTokenHeaderKey = "token"
 )
 
 //checkSigningMethodType 校验签名函数的类型是否正确
