@@ -22,5 +22,5 @@ func GetExeFileName() (exePath string) {
 	}
 	//分解可执行文件路径
 	_, exePath = filepath.Split(path)
-	return
+	return exePath
 }
