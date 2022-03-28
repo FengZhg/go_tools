@@ -37,7 +37,7 @@ func (f *funcJwtESOption) apply(do *jwtESOptions) {
 }
 
 //newFuncJwtESOption 新构建初始化函数
-func newFuncJwtESOption(f func(options *jwtESOptions)) *funcJwtESOption {
+func newFuncJwtESOption(f func(options *jwtESOptions)) JwtESOption {
 	return &funcJwtESOption{
 		f: f,
 	}
@@ -82,33 +82,6 @@ func WithTokenHeaderKey(tokenHeaderKey string) JwtESOption {
 // 初始化jwt ES 相关
 //-----------------------------------------------------//
 
-//默认private key path : ./config/private.ec.key
-//默认public key path  : ./config/public.pem
-//默认type key         ： default
-//defaultJwtES 获取默认ES选项
-func defaultJwtES() *jwtESOptions {
-	// 默认结构体
-	return &jwtESOptions{
-		priPath:        defaultPrivatePath,
-		pubPath:        defaultPublicPath,
-		typeKey:        defaultTypeKey,
-		alg:            jwt.SigningMethodES512.Alg(),
-		tokenHeaderKey: defaultTokenHeaderKey,
-	}
-}
-
-//NewES512 初始化ES512 JWT
-func NewES512(opts ...JwtESOption) *JwtES {
-	// 初始化默认GoJwt
-	g := defaultJwtES()
-	// 调用opts函数
-	opts = append(opts, WithAlg(jwt.SigningMethodES512.Alg()))
-	for _, opt := range opts {
-		opt.apply(g)
-	}
-	return initES(g)
-}
-
 //initES 初始化goJwtES
 func initES(options *jwtESOptions) *JwtES {
 	// 读取文件私钥
@@ -136,6 +109,35 @@ func initES(options *jwtESOptions) *JwtES {
 		publicKey:  pubKey,
 		opts:       options,
 	}
+}
+
+//默认private key path : ./config/private.ec.key
+//默认public key path  : ./config/public.pem
+//默认type key         ： default
+//initJwtES 获取默认ES选项
+func initJwtES(opts ...JwtESOption) *JwtES {
+	// 默认结构体
+	j := &jwtESOptions{
+		priPath:        defaultPrivatePath,
+		pubPath:        defaultPublicPath,
+		typeKey:        defaultTypeKey,
+		alg:            jwt.SigningMethodES512.Alg(),
+		tokenHeaderKey: defaultTokenHeaderKey,
+	}
+
+	// 丰富参数
+	for _, opt := range opts {
+		opt.apply(j)
+	}
+
+	// 初始化ES goJwt
+	return initES(j)
+}
+
+//NewES512 初始化ES512 JWT
+func NewES512(opts ...JwtESOption) *JwtES {
+	opts = append(opts, WithAlg(jwt.SigningMethodES512.Alg()))
+	return initJwtES(opts...)
 }
 
 //-----------------------------------------------------//
