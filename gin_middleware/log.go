@@ -65,7 +65,7 @@ func (r *requestLog) requestLogMiddleware(ctx *gin.Context) {
 //buildLogInfo 构建一条日志
 func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr string) *go_protocol.SingleLogInfo {
 	// 获取登录态
-	loginInfo, _ := goJwt.GetLoginInfo(ctx)
+	loginInfo := goJwt.GetLoginInfo(ctx)
 	// 构造日志
 	logInfo := &go_protocol.SingleLogInfo{
 		LogType:   defaultLogType,
