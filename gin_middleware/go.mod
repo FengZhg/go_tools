@@ -3,15 +3,15 @@ module github.com/FengZhg/go_tools/gin_middleware
 go 1.18
 
 require (
-	github.com/FengZhg/go_tools/errs v0.0.0-20220328073327-4f127cbd2444
-	github.com/FengZhg/go_tools/goJwt v0.0.0-20220328073327-4f127cbd2444
-	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220328073327-4f127cbd2444
+	github.com/FengZhg/go_tools/errs v0.0.0-20220328130823-b995741fe3bf
+	github.com/FengZhg/go_tools/goJwt v0.0.0-20220328130823-b995741fe3bf
+	github.com/FengZhg/go_tools/go_protocol v0.0.0-20220328130823-b995741fe3bf
 	github.com/gin-gonic/gin v1.7.7
 	github.com/sirupsen/logrus v1.8.1
 )
 
 require (
-	github.com/FengZhg/go_tools/utils v0.0.0-20220328073327-4f127cbd2444 // indirect
+	github.com/FengZhg/go_tools/utils v0.0.0-20220328130823-b995741fe3bf // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
