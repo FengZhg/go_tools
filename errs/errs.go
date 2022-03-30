@@ -1,14 +1,14 @@
 package errs
 
 import (
-	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 //Err 带错误代码的错误类型
 type Err struct {
-	Code   int32  `json:code`   // 错误代码
-	ErrMsg string `json:errMsg` // 错误信息
+	Code   int32  // 错误代码
+	ErrMsg string // 错误信息
 	error
 }
 
@@ -29,11 +29,7 @@ func (x *Err) GetCode() int32 {
 }
 
 func (x Err) Error() string {
-	bytes, err := json.Marshal(x)
-	if err != nil {
-		return "{\"code\":\"0000\",\"errMsg\":\"错误\"}"
-	}
-	return string(bytes)
+	return fmt.Sprintf("Error Code: %v \t Error Msg: %v", x.GetCode(), x.GetErrMsg())
 }
 
 func (x Err) String() string {
