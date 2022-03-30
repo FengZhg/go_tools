@@ -21,6 +21,7 @@ type JwtES struct {
 
 type jwtESOptions struct {
 	typeKey, alg, priPath, pubPath, tokenHeaderKey string
+	validTime                                      time.Duration
 }
 type JwtESOption interface {
 	apply(*jwtESOptions)
@@ -71,16 +72,19 @@ func WithAlg(alg string) JwtESOption {
 	})
 }
 
+//WithValidTime 自定义有效时间
+func WithValidTime(validTime time.Duration) JwtESOption {
+	return newFuncJwtESOption(func(options *jwtESOptions) {
+		options.validTime = validTime
+	})
+}
+
 //WithTokenHeaderKey 自定义TokenHeaderKey
 func WithTokenHeaderKey(tokenHeaderKey string) JwtESOption {
 	return newFuncJwtESOption(func(options *jwtESOptions) {
 		options.tokenHeaderKey = tokenHeaderKey
 	})
 }
-
-//-----------------------------------------------------//
-// 初始化jwt ES 相关
-//-----------------------------------------------------//
 
 //initES 初始化goJwtES
 func initES(options *jwtESOptions) *JwtES {
@@ -123,6 +127,7 @@ func initJwtES(opts ...JwtESOption) *JwtES {
 		typeKey:        defaultTypeKey,
 		alg:            jwt.SigningMethodES512.Alg(),
 		tokenHeaderKey: defaultTokenHeaderKey,
+		validTime:      45 * time.Minute,
 	}
 
 	// 丰富参数
@@ -145,14 +150,15 @@ func NewES512(opts ...JwtESOption) *JwtES {
 //-----------------------------------------------------//
 
 //ApplyToken 申请jwt的token
-func (g *JwtES) ApplyToken(uid string) (string, error) {
-	return jwt.NewWithClaims(jwt.GetSigningMethod(g.opts.alg), g.buildBaseClaim(uid)).SignedString(g.privateKey)
+func (g *JwtES) ApplyToken(uid string, name string) (string, error) {
+	return jwt.NewWithClaims(jwt.GetSigningMethod(g.opts.alg), g.buildBaseClaim(uid, name)).SignedString(g.privateKey)
 }
 
 //buildBaseClaim 构造登录态
-func (g *JwtES) buildBaseClaim(uid string) *go_protocol.JwtStatus {
+func (g *JwtES) buildBaseClaim(uid string, name string) *go_protocol.JwtStatus {
 	return &go_protocol.JwtStatus{
 		LoginStatus: go_protocol.LoginStatus{
+			Name: name,
 			Uid:  uid,
 			Type: g.opts.typeKey,
 		},
