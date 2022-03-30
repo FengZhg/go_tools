@@ -107,8 +107,11 @@ func (r *requestLog) getRequestBody(ctx *gin.Context) string {
 		log.Errorf("Pharse Request Json Param Error err = %v", err)
 		return "请求参数解析错误"
 	}
-	// 将那玩意放回去
 	ctx.Request.Body = ioutil.NopCloser(bytes.NewBuffer(reqBytes))
+	if len(reqBytes) > 500 {
+		return "请求体过大，不显示"
+	}
+	// 将那玩意放回去
 	return string(reqBytes)
 }
 
