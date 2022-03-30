@@ -12,7 +12,8 @@ message StandardRsp {
 
 // 登录态结构
 message LoginStatus {
-	string uid  = 1;  // 用户id
+	string uid  = 1; // 用户id
+	string name = 2; // 用户名称
 	string type = 3; // 登录态类型
 }
 
