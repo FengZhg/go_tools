@@ -164,7 +164,7 @@ func (g *JwtES) buildBaseClaim(uid string, name string) *go_protocol.JwtStatus {
 		},
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    utils.GetExeFileName() + g.opts.typeKey,
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Minute)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(g.opts.validTime)),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
