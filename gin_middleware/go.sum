@@ -1,7 +1,15 @@
 github.com/FengZhg/go_tools/errs v0.0.0-20220328130823-b995741fe3bf h1:SmguPhzZl8akLmqdPyavkOojpHXpgHQDylBGOy6FFUo=
 github.com/FengZhg/go_tools/errs v0.0.0-20220328130823-b995741fe3bf/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
+github.com/FengZhg/go_tools/errs v0.0.0-20220330085610-b7574142500a h1:gG0cgyi3XBnZ/7psXcQ8OgtCmNp7dVB9IyW6juRp52I=
+github.com/FengZhg/go_tools/errs v0.0.0-20220330085610-b7574142500a/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
+github.com/FengZhg/go_tools/errs v0.0.0-20220330092620-ccc5e24bfcb6 h1:n0UyE48p4hJU7acQNsOap317LJu+kh6O/1/RQfI17Ro=
+github.com/FengZhg/go_tools/errs v0.0.0-20220330092620-ccc5e24bfcb6/go.mod h1:KSZxlvtPUa2g80gdWG5RziePsnGFKMiaBFaSsBs3z34=
 github.com/FengZhg/go_tools/go_protocol v0.0.0-20220328130823-b995741fe3bf h1:Z1dlinBX+0WIE4k40Qr2y7R65i1yDub9ANb5lH9pJ0I=
 github.com/FengZhg/go_tools/go_protocol v0.0.0-20220328130823-b995741fe3bf/go.mod h1:jinpdjzq2BTA8L+o+OL68CPbtv/IzdzoZQ3mpO3s7XI=
+github.com/FengZhg/go_tools/go_protocol v0.0.0-20220330085610-b7574142500a h1:jpqDJrA1wNjldm2F3mqNExgh+qd11zNcSP9NeEyJSzI=
+github.com/FengZhg/go_tools/go_protocol v0.0.0-20220330085610-b7574142500a/go.mod h1:jinpdjzq2BTA8L+o+OL68CPbtv/IzdzoZQ3mpO3s7XI=
+github.com/FengZhg/go_tools/go_protocol v0.0.0-20220330092620-ccc5e24bfcb6 h1:Et8Mz2BlLsSM0NR0l9igl7sV87YZujgODB0M/P0VouQ=
+github.com/FengZhg/go_tools/go_protocol v0.0.0-20220330092620-ccc5e24bfcb6/go.mod h1:jinpdjzq2BTA8L+o+OL68CPbtv/IzdzoZQ3mpO3s7XI=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
@@ -93,6 +101,8 @@ golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886 h1:eJv7u3ksNXoLbGSKuv2s/SIO4tJVxc/A+MTpzxDgz/Q=
 golang.org/x/sys v0.0.0-20220328115105-d36c6a25d886/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220330033206-e17cdc41300f h1:rlezHXNlxYWvBCzNses9Dlc7nGFaNMJeqLolcmQSSZY=
+golang.org/x/sys v0.0.0-20220330033206-e17cdc41300f/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=

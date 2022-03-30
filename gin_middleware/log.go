@@ -70,6 +70,7 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr strin
 	logInfo := &go_protocol.SingleLogInfo{
 		LogType:   defaultLogType,
 		Id:        loginInfo.GetUid(),
+		Name:      loginInfo.GetName(),
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
 		Req:       reqStr,
