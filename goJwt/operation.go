@@ -16,8 +16,6 @@ func GetJwtStatus(ctx *gin.Context) *go_protocol.JwtStatus {
 	if !exist {
 		return nil
 	}
-
-	// reflect
 	jwtStatus, ok := jwtStatusInterface.(go_protocol.JwtStatus)
 	if !ok {
 		return nil
