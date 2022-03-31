@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"strings"
 	"sync"
 	"time"
 )
@@ -73,8 +74,8 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr strin
 		Name:      loginInfo.GetName(),
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
-		Req:       reqStr,
-		Message:   bw.body.String(),
+		Req:       strings.ReplaceAll(reqStr, "\n", ""),
+		Message:   strings.ReplaceAll(bw.body.String(), "\n", ""),
 		Time:      time.Now().Format("2006-01-02 15:04:05"),
 		TimeStamp: time.Now().Unix(),
 	}
