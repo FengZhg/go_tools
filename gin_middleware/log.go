@@ -74,8 +74,8 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr strin
 		Name:      loginInfo.GetName(),
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
-		Req:       replaceExtraChar(reqStr),
-		Message:   replaceExtraChar(bw.body.String()),
+		Req:       reqStr,
+		Message:   r.getResponse(bw),
 		Time:      time.Now().Format("2006-01-02 15:04:05"),
 		TimeStamp: time.Now().Unix(),
 	}
@@ -114,7 +114,15 @@ func (r *requestLog) getRequestBody(ctx *gin.Context) string {
 	if len(reqBytes) > 500 {
 		return "请求体过大，不显示"
 	}
-	return string(reqBytes)
+	return replaceExtraChar(string(reqBytes))
+}
+
+//getResponse
+func (r *requestLog) getResponse(bw *bodyWriter) string {
+	if len(bw.body.String()) > 500 {
+		return "请求体过大，不显示"
+	}
+	return replaceExtraChar(bw.body.String())
 }
 
 //getStatus 获取处理状态
