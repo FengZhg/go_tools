@@ -74,8 +74,8 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr strin
 		Name:      loginInfo.GetName(),
 		FullPath:  ctx.FullPath(),
 		Status:    r.getStatus(ctx),
-		Req:       strings.ReplaceAll(reqStr, "\n", ""),
-		Message:   strings.ReplaceAll(bw.body.String(), "\n", ""),
+		Req:       strings.ReplaceAll(reqStr, "\n", " "),
+		Message:   strings.ReplaceAll(bw.body.String(), "\n", " "),
 		Time:      time.Now().Format("2006-01-02 15:04:05"),
 		TimeStamp: time.Now().Unix(),
 	}
@@ -106,14 +106,14 @@ func (r *requestLog) getRequestBody(ctx *gin.Context) string {
 	// read请求参数
 	reqBytes, err := ioutil.ReadAll(ctx.Request.Body)
 	if err != nil {
-		log.Errorf("Pharse Request Json Param Error err = %v", err)
+		log.Errorf("Read All Body err = %v", err)
 		return "请求参数解析错误"
 	}
+	// 将那玩意放回去
 	ctx.Request.Body = ioutil.NopCloser(bytes.NewBuffer(reqBytes))
 	if len(reqBytes) > 500 {
 		return "请求体过大，不显示"
 	}
-	// 将那玩意放回去
 	return string(reqBytes)
 }
 
@@ -127,6 +127,6 @@ func (r *requestLog) getStatus(ctx *gin.Context) string {
 
 //stdCallback 标准输出日志信息
 func stdCallback(ctx *gin.Context, logInfo *go_protocol.SingleLogInfo) {
-	log.Infof("LoginInfo ID:%v \tFull Path:%v \tReq Body:%v \tRsp:%v", logInfo.GetId(), logInfo.GetFullPath(),
+	log.Infof("LoginInfo:%v FullPath:%v Req:%v Rsp:%v", logInfo.String(), logInfo.GetFullPath(),
 		logInfo.GetReq(), logInfo.GetMessage())
 }
