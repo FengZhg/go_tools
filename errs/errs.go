@@ -59,7 +59,10 @@ func GetErrorMsg(err error) string {
 }
 
 //Code2Error 从
-func Code2Error(code int32) Err {
+func Code2Error(code int32) error {
+	if code == 0 {
+		return nil
+	}
 	if err, ok := errMap[code]; ok {
 		return err
 	}
