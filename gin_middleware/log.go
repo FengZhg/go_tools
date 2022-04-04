@@ -77,7 +77,7 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr strin
 		Req:       reqStr,
 		Message:   r.getResponse(bw),
 		Time:      time.Now().Format("2006-01-02 15:04:05"),
-		TimeStamp: time.Now().Unix(),
+		TimeStamp: time.Now().UnixNano(),
 	}
 
 	// 跑一下钩子

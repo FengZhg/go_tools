@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+var errMap = map[int32]Err{}
+
 //Err 带错误代码的错误类型
 type Err struct {
 	Code   int32  // 错误代码
@@ -14,10 +16,12 @@ type Err struct {
 
 //NewError 构造新的错误类型
 func NewError(code int32, msg string) Err {
-	return Err{
+	err := Err{
 		Code:   code,
 		ErrMsg: msg,
 	}
+	errMap[code] = err
+	return err
 }
 
 func (x *Err) GetErrMsg() string {
@@ -52,4 +56,15 @@ func GetErrorMsg(err error) string {
 		return err.Error()
 	}
 	return errs.GetErrMsg()
+}
+
+//Code2Error 从
+func Code2Error(code int32) Err {
+	if err, ok := errMap[code]; ok {
+		return err
+	}
+	return Err{
+		Code:   code,
+		ErrMsg: "Unknown Error",
+	}
 }
