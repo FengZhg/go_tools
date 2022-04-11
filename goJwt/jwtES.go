@@ -209,7 +209,7 @@ func (g *JwtES) authMiddleware(ctx *gin.Context) {
 
 	// 解析登录态信息
 	jwtStatus, ok := jwtToken.Claims.(*go_protocol.JwtStatus)
-	if !ok || !jwtToken.Valid {
+	if !ok || !jwtToken.Valid || jwtStatus.GetType() != g.opts.typeKey {
 		log.Errorf("User Jwt Token Error relfect ok:%v\tToken Valid:%v", ok, jwtToken.Valid)
 		ctx.Error(go_protocol.LoginInfoError)
 		ctx.Abort()
