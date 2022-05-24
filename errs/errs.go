@@ -33,7 +33,7 @@ func (x *Err) GetCode() int32 {
 }
 
 func (x Err) Error() string {
-	return fmt.Sprintf("Error Code: %v \t Error Msg: %v", x.GetCode(), x.GetErrMsg())
+	return fmt.Sprintf("Error Code:%v  Error Msg:%v", x.GetCode(), x.GetErrMsg())
 }
 
 func (x Err) String() string {
