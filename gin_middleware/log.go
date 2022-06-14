@@ -10,7 +10,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"strings"
-	"sync"
 	"time"
 )
 
@@ -90,15 +89,11 @@ func (r *requestLog) buildLogInfo(ctx *gin.Context, bw *bodyWriter, reqStr strin
 //doOutputCallbacks 运行所有地输出回调函数
 func (r *requestLog) doOutputCallbacks(ctx *gin.Context, logInfo *go_protocol.SingleLogInfo) {
 	// 简简单单并发执行所有输出回调（包括默认的info日志输出回调）
-	wg := sync.WaitGroup{}
 	for _, outputCallback := range r.outputCallbacks {
-		wg.Add(1)
 		go func(callback OutputFunc) {
-			defer wg.Done()
 			callback(ctx, logInfo)
 		}(outputCallback)
 	}
-	wg.Wait()
 }
 
 //getRequestBody 获取请求参数
